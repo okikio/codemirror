@@ -235,7 +235,7 @@ foldGutter({
                 backgroundColor: colors.activelineBg,
                 padding: "5px",
                 "border-radius": "5px",
-                "box-shadow": "0px 0px 15px rgb(20 20 20 / 25%)"
+                "box-shadow": "2px 3px 5px rgb(0 0 0 / 20%)"
             },
             ".cm-tooltip.cm-tooltip-autocomplete": {
                 "& > ul > li": {
@@ -331,6 +331,7 @@ foldGutter({
     });
 })();
 
-// new Worker(new URL("./workers/my-worker.ts", import.meta.url), {
-//   type: "module"
-// });
+new Worker(new URL("./workers/tsserver.js", import.meta.url), {
+  name: 'ts-server',
+  type: "module"
+});

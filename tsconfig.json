@@ -5,7 +5,9 @@
         "module": "ES2020",
         "lib": [
             "ES2019",
-            "DOM"
+            "DOM",
+            "WebWorker",
+            "ES2021"
         ],
         "sourceMap": true,
         "isolatedModules": true,

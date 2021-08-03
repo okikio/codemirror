@@ -1,13 +1,19 @@
-// import {
-//     createSystem,
-//     createVirtualTypeScriptEnvironment
-// } from "@typescript/vfs";
+import {
+    createSystem,
+    createVirtualTypeScriptEnvironment
+} from "@typescript/vfs";
 // import ts from "typescript";
 
-// const fsMap = new Map<string, string>();
-// fsMap.set("index.ts", 'const a = "Hello World"');
+// @ts-ignore
+import ts from "http://cdn.esm.sh/typescript";
 
-// const system = createSystem(fsMap);
+const fsMap = new Map<string, string>();
+fsMap.set("index.ts", 'const a = "Hello World"');
+
+const system = createSystem(fsMap);
+
+
+
 
 // const compilerOpts = {};
 // const env = createVirtualTypeScriptEnvironment(
