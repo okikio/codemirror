@@ -3,7 +3,7 @@
 // You can write any JavaScript/TypeScript that you'd like here.
 // It will run during the build, but never in the browser.
 // All variables are available to use in the HTML template below.
-let title = 'My Astro Site';
+let title = 'Codemirror Test';
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/core-concepts/astro-components/
@@ -14,8 +14,6 @@ let title = 'My Astro Site';
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="stylesheet" href="/style/global.css">
-    <link rel="stylesheet" href="/style/home.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,12 +22,34 @@ let title = 'My Astro Site';
       rel="stylesheet"
     />
 
-    <style>
-        header {
-            display: flex;
-            flex-direction: column;
-            gap: 1em;
-            max-width: min(100%, 68ch);
+    <style lang="scss" global>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        :root {
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+            font-size: 1rem;
+            --user-font-scale: 1rem - 16px;
+            font-size: clamp(0.875rem, 0.4626rem + 1.0309vw + var(--user-font-scale), 1.125rem);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                background-color: black;
+                color-scheme: dark;
+            }
+        }
+
+        body {
+            padding: min(2rem, 5vmax);
+        }
+
+        #editor {
+            margin-inline: auto;
+            max-width: 75vw;
+            width: 100%;
         }
     </style>
 </head>

@@ -1,21 +1,27 @@
-import {
-    createSystem,
-    createVirtualTypeScriptEnvironment
-} from "@typescript/vfs";
-import ts from "typescript";
+// import {
+//     createSystem,
+//     createVirtualTypeScriptEnvironment
+// } from "@typescript/vfs";
+// import ts from "typescript";
 
-const fsMap = new Map<string, string>();
-fsMap.set("index.ts", 'const a = "Hello World"');
+// const fsMap = new Map<string, string>();
+// fsMap.set("index.ts", 'const a = "Hello World"');
 
-const system = createSystem(fsMap);
+// const system = createSystem(fsMap);
 
-const compilerOpts = {};
-const env = createVirtualTypeScriptEnvironment(
-    system,
-    ["index.ts"],
-    ts,
-    compilerOpts
-);
+// const compilerOpts = {};
+// const env = createVirtualTypeScriptEnvironment(
+//     system,
+//     ["index.ts"],
+//     ts,
+//     compilerOpts
+// );
 
-// You can then interact with the languageService to introspect the code
-env.languageService.getDocumentHighlights("index.ts", 0, ["index.ts"]);
+// ,
+// "@typescript/vfs": "^1.3.4",
+// "typescript": "^4.3.5"
+
+
+// // You can then interact with the languageService to introspect the code
+// env.languageService.getDocumentHighlights("index.ts", 0, ["index.ts"]);
+export { };
