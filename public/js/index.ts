@@ -21,7 +21,7 @@ import {
 } from "@codemirror/gutter";
 import {
     defaultKeymap,
-    defaultTabBinding
+    indentWithTab
 } from "@codemirror/commands";
 import { bracketMatching } from "@codemirror/matchbrackets";
 import {
@@ -321,7 +321,7 @@ foldGutter({
                 myTheme,
                 myHighlightStyle,
 
-                keymap.of([defaultTabBinding]),
+                keymap.of([indentWithTab]),
                 javascript({
                     typescript: true
                 })
