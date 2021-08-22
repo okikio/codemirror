@@ -10,10 +10,10 @@ import {
 // @ts-ignore
 // import ts from "https://cdn.esm.sh/typescript";
 
-import ts from "./typescript";
+import ts from "./typescript.js";
 console.log(ts)
 
-const fsMap = new Map<string, string>();
+const fsMap = new Map();
 fsMap.set("index.ts", 'const a = "Hello World"');
 
 const system = createSystem(fsMap);
