@@ -7,6 +7,8 @@ let title = 'Codemirror Test';
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/core-concepts/astro-components/
+
+import Editor from '../components/Editor.tsx';
 ---
 <html lang="en">
 <head>
@@ -54,8 +56,6 @@ let title = 'Codemirror Test';
     </style>
 </head>
 <body>        
-    <div id="editor"></div>
-    
-    <script src="/js/index.js" type="module" async></script> 
+    <Editor client:load />
 </body>
 </html>
