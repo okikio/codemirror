@@ -3,8 +3,6 @@
 
 /** @type {import("snowpack").SnowpackUserConfig } */
 export default {
-  // exclude: ["typescript"],
-  
   optimize: {
     bundle: true,
     minify: true,
@@ -18,8 +16,9 @@ export default {
     /* ... */
   ],
   packageOptions: {
+    exclude: ["typescript"],
     /* ... */
-    polyfillNode: true
+    // polyfillNode: true
   },
   devOptions: {
     /* ... */

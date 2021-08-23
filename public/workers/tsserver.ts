@@ -1,46 +1,87 @@
 importScripts("https://unpkg.com/@typescript/vfs@1.3.4/dist/vfs.globals.js");
 importScripts("https://cdnjs.cloudflare.com/ajax/libs/typescript/4.4.1-rc/typescript.min.js");
-importScripts("https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js");
+importScripts("https://unpkg.com/@okikio/emitter@2.1.7/lib/api.js");
 
-var { createDefaultMapFromCDN, createSystem } = globalThis.tsvfs;
-var ts = globalThis.ts;
-var lzstring = globalThis.LZString;// @ts-ignore
-globalThis.localStorage = globalThis.localStorage ?? {};
-console.log(globalThis)
+var { createDefaultMapFromCDN, createSystem, createVirtualTypeScriptEnvironment } = globalThis.tsvfs as VFS;
+var ts = globalThis.ts; // as TS
 
-const start = async () => {
-    const shouldCache = false;
-    // This caches the lib files in the site's localStorage
-    const fsMap = await createDefaultMapFromCDN({ target: ts.ScriptTarget.ES2015 }, "4.3.5", shouldCache, ts)
+var EventEmitter = globalThis.emitter.EventEmitter;
+var _emitter: EVENT_EMITTER = new EventEmitter();
 
-    // This stores the lib files as a zipped string to save space in the cache
-    // const otherMap = await createDefaultMapFromCDN({ target: ts.ScriptTarget.ES2015 }, "3.7.3", shouldCache, ts, lzstring)
+globalThis.localStorage = globalThis.localStorage ?? {} as Storage;
 
-    fsMap.set("index.ts", "const hello = 'hi'")
-    // ...
+(async () => {
+    const compilerOpts = {
+        target: ts.ScriptTarget.ES2020
+    };
+
+    let initialText = "const hello = 'hi'";
+    _emitter.once("updateText", (details) => {
+        initialText = details.text.join("\n");
+    });
+
+    const fsMap = await createDefaultMapFromCDN(compilerOpts, ts.version, false, ts)
+    const ENTRY_POINT = "index.ts";
+    fsMap.set(ENTRY_POINT, initialText);
+
     const system = createSystem(fsMap);
-    console.log(system)
-}
+    const env = createVirtualTypeScriptEnvironment(system, [ENTRY_POINT], ts, compilerOpts);
 
-start()
-// const shouldCache = true;
-// // This caches the lib files in the site's localStorage
-// const fsMap = await createDefaultMapFromCDN({ target: ts.ScriptTarget.ES2015 }, "3.7.3", shouldCache, ts)
+    // You can then interact with the languageService to introspect the code
+    // env.languageService.getDocumentHighlights(ENTRY_POINT, 0, [ENTRY_POINT]);
+    postMessage({
+        event: "ready",
+        details: []
+    });
 
-// fsMap.set("index.ts", 'const a = "Hello World"');
+    _emitter.on("updateText", (details) => {
+        env.updateFile(ENTRY_POINT, [].concat(details.text).join("\n"));
+        // console.log(details.text)
+    });
 
-// const system = globalThis.tsvfss.createSystem(fsMap);
+    _emitter.on("autocomplete-request", ({ pos }) => {
+        let result = env.languageService.getCompletionsAtPosition(ENTRY_POINT, pos, {});
 
-// const compilerOpts = {
-//     target: globalThis.ts.ScriptTarget.ES2015
-// };
-// const env = globalThis.tsvfss.createVirtualTypeScriptEnvironment(
-//     system,
-//     ["index.ts"],
-//     globalThis.ts,
-//     compilerOpts
-// );
+        postMessage({
+            event: "autocomplete-results",
+            details: result
+        })
+    })
 
-// // You can then interact with the languageService to introspect the code
-// let v = env.languageService.getDocumentHighlights("index.ts", 0, ["index.ts"]);
-// console.log(v)
+    _emitter.on("tooltip-request", ({ pos }) => {
+        let result = env.languageService.getQuickInfoAtPosition(ENTRY_POINT, pos);
+
+                                
+        postMessage({
+            event: "tooltip-results",
+            details: result ? { 
+                result, 
+                tootltipText: ts.displayPartsToString(result.displayParts) + 
+                    (result.documentation?.length ? "\n" + ts.displayPartsToString(result.documentation)  : "")
+            } : { result, tooltipText: "" }
+        })
+    })
+
+    _emitter.on("lint-request", () => {
+        let SyntacticDiagnostics = env.languageService.getSyntacticDiagnostics(ENTRY_POINT);
+        let SemanticDiagnostic = env.languageService.getSemanticDiagnostics(ENTRY_POINT);
+        let SuggestionDiagnostics = env.languageService.getSuggestionDiagnostics(ENTRY_POINT);
+        type Diagnostics = typeof SyntacticDiagnostics & typeof SemanticDiagnostic & typeof SuggestionDiagnostics;
+        let result: Diagnostics  = [].concat(SyntacticDiagnostics, SemanticDiagnostic, SuggestionDiagnostics);
+        postMessage({
+            event: "lint-results",
+            details: result.map(v => ({
+                from: v.start,
+                to: v.start + v.length,
+                message: v.messageText,
+                source: v?.source,
+                severity: "warning"
+            }))
+        })
+    })
+})();
+
+addEventListener('message', ({ data }: MessageEvent<{ event: string, details: any }>) => {
+    let { event, details } = data;
+    _emitter.emit(event, details);
+});
