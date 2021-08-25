@@ -128,6 +128,18 @@ export const THEME = EditorView.theme(
                 backgroundColor: COLORS.bg,
                 color: COLORS.text
             }
+        },
+
+        ".cm-panel.cm-panel-lint ul": { 
+            "& li": {
+                backgroundColor: "rgb(34 39 46 / 50%)",
+            },
+            "& [aria-selected]": {
+                backgroundColor: "rgb(19 20 22 / 74%)",
+            },
+            "&:focus [aria-selected]": {
+                backgroundColor: "rgb(16 23 35 / 74%)",
+            }
         }
     },
     { dark: true }

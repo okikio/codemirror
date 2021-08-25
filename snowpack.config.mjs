@@ -16,9 +16,9 @@ export default {
     /* ... */
   ],
   packageOptions: {
-    exclude: ["typescript"],
+    // exclude: ["typescript"],
+    polyfillNode: true
     /* ... */
-    // polyfillNode: true
   },
   devOptions: {
     /* ... */

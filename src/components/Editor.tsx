@@ -2,16 +2,21 @@ import { onMount } from "solid-js";
 
 import { EventEmitter } from "@okikio/emitter";
 import { EditorView } from "@codemirror/view";
-import { autocompletion, completeFromList } from "@codemirror/autocomplete";
+import { autocompletion, completeFromList, startCompletion } from "@codemirror/autocomplete";
 import { hoverTooltip } from "@codemirror/tooltip";
 import { Diagnostic, linter } from "@codemirror/lint";
+import { keymap } from "@codemirror/view";
 
+import debounce from "lodash.debounce";
 import debounceAsync from "debounce-async";
-const debounce = debounceAsync.default;
+const asyncdebounce = debounceAsync.default;
 
-import type { CompletionContext, CompletionResult } from "@codemirror/autocomplete";
+
+import type { CompletionContext, CompletionResult, Completion } from "@codemirror/autocomplete";
 import type { ViewUpdate } from "@codemirror/view";
 import type { Tooltip } from "@codemirror/tooltip";
+
+import type * as ts from "@typescript/vfs";
 
 import Codemirror from "./codemirror";
 
@@ -21,42 +26,23 @@ export default ({ children }) => {
     onMount(() => {
         let tsServer = new Worker(
             new URL("/workers/tsserver.js", import.meta.url),
-            {
-                name: "ts-server",
-            }
+            { name: "ts-server" }
         );
 
         let editor = Codemirror(editorEl, [
-            EditorView.updateListener.of((update: ViewUpdate) => {
+            EditorView.updateListener.of(debounce((update: ViewUpdate) => {
                 if (update.docChanged) {
                     tsServer.postMessage({
                         event: "updateText",
                         details: update.state.doc,
                     });
                 }
-            }),
-            linter(async (view: EditorView): Promise<Diagnostic[]> => {
-                tsServer.postMessage({
-                    event: "lint-request",
-                    details: []
-                });
+            }, 150)),
 
-                const diagnostics = await new Promise((resolve) => {
-                    emitter.on("lint-results", (completions) => {
-                        resolve(completions);
-                    });
-                });
-
-                if (!diagnostics) return null;
-                return diagnostics as Diagnostic[];
-            }, {
-                delay: 400
-            }),
             autocompletion({
                 activateOnTyping: true,
-                maxRenderedOptions: 30,
                 override: [
-                    debounce(async (ctx: CompletionContext): Promise<CompletionResult | null> => {
+                    asyncdebounce(async (ctx: CompletionContext): Promise<CompletionResult | null> => {
                         const { pos } = ctx;
 
                         try {
@@ -78,12 +64,16 @@ export default ({ children }) => {
 
                             return completeFromList(
                                 // @ts-ignore
-                                completions.entries.map((c, i) => ({
-                                    type: c.kind,
-                                    label: c.name,
-                                    // TODO:: populate details and info
-                                    boost: 1 / Number(c.sortText),
-                                }))
+                                completions.map((c, i) => {
+                                    let suggestions: Completion = ({
+                                        type: c.kind,
+                                        label: c.name,
+                                        // TODO:: populate details and info
+                                        boost: 1 / Number(c.sortText),
+                                    })
+
+                                    return suggestions;
+                                })
                             )(ctx);
                         } catch (e) {
                             console.log("Unable to get completions", { pos, error: e });
@@ -92,6 +82,7 @@ export default ({ children }) => {
                     }, 200),
                 ],
             }),
+
             hoverTooltip(
                 async ({ state }: EditorView, pos: number): Promise<Tooltip | null> => {
                     tsServer.postMessage({
@@ -122,16 +113,34 @@ export default ({ children }) => {
                     hideOnChange: true,
 
                 }
-            )
-        ]);
+            ),
 
-        tsServer.postMessage({
-            event: "updateText",
-            details: editor.state.doc,
-        });
+            linter(async (view: EditorView): Promise<Diagnostic[]> => {
+                tsServer.postMessage({
+                    event: "lint-request",
+                    details: []
+                });
+
+                const diagnostics = await new Promise((resolve) => {
+                    emitter.on("lint-results", (completions) => {
+                        resolve(completions);
+                    });
+                });
+
+                if (!diagnostics) return null;
+                return diagnostics as Diagnostic[];
+            }, {
+                delay: 400
+            }),
+        ]);
 
         emitter.on("ready", () => {
             console.log("ts-server is ready");
+
+            tsServer.postMessage({
+                event: "updateText",
+                details: editor.state.doc,
+            });
         });
 
         tsServer.addEventListener(

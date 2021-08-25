@@ -1,7 +1,7 @@
-importScripts("https://unpkg.com/@typescript/vfs@1.3.4/dist/vfs.globals.js");
-importScripts("https://cdnjs.cloudflare.com/ajax/libs/typescript/4.4.1-rc/typescript.min.js");
-importScripts("https://unpkg.com/@okikio/emitter@2.1.7/lib/api.js");
 var _a;
+importScripts("https://unpkg.com/@typescript/vfs@1.3.4/dist/vfs.globals.js");
+importScripts("https://cdnjs.cloudflare.com/ajax/libs/typescript/4.3.5/typescript.min.js");
+importScripts("https://unpkg.com/@okikio/emitter@2.1.7/lib/api.js");
 var { createDefaultMapFromCDN, createSystem, createVirtualTypeScriptEnvironment } = globalThis.tsvfs;
 var ts = globalThis.ts; // as TS
 var EventEmitter = globalThis.emitter.EventEmitter;
@@ -9,7 +9,14 @@ var _emitter = new EventEmitter();
 globalThis.localStorage = (_a = globalThis.localStorage) !== null && _a !== void 0 ? _a : {};
 (async () => {
     const compilerOpts = {
-        target: ts.ScriptTarget.ES2020
+        target: ts.ScriptTarget.ES2021,
+        module: ts.ScriptTarget.ES2020,
+        "lib": [
+            "ES2020",
+            "DOM",
+            "WebWorker"
+        ],
+        "esModuleInterop": true,
     };
     let initialText = "const hello = 'hi'";
     _emitter.once("updateText", (details) => {
@@ -21,7 +28,6 @@ globalThis.localStorage = (_a = globalThis.localStorage) !== null && _a !== void
     const system = createSystem(fsMap);
     const env = createVirtualTypeScriptEnvironment(system, [ENTRY_POINT], ts, compilerOpts);
     // You can then interact with the languageService to introspect the code
-    // env.languageService.getDocumentHighlights(ENTRY_POINT, 0, [ENTRY_POINT]);
     postMessage({
         event: "ready",
         details: []
@@ -34,7 +40,10 @@ globalThis.localStorage = (_a = globalThis.localStorage) !== null && _a !== void
         let result = env.languageService.getCompletionsAtPosition(ENTRY_POINT, pos, {});
         postMessage({
             event: "autocomplete-results",
-            details: result
+            details: result.entries.map((v) => {
+                // let details = env.languageService.getCompletionEntryDetails(ENTRY_POINT, pos, v.name, {}, v.source, {}, v.data);
+                return Object.assign({}, v);
+            })
         });
     });
     _emitter.on("tooltip-request", ({ pos }) => {
@@ -56,13 +65,20 @@ globalThis.localStorage = (_a = globalThis.localStorage) !== null && _a !== void
         let result = [].concat(SyntacticDiagnostics, SemanticDiagnostic, SuggestionDiagnostics);
         postMessage({
             event: "lint-results",
-            details: result.map(v => ({
-                from: v.start,
-                to: v.start + v.length,
-                message: v.messageText,
-                source: v === null || v === void 0 ? void 0 : v.source,
-                severity: "warning"
-            }))
+            details: result.map(v => {
+                let from = v.start;
+                let to = v.start + v.length;
+                // let codeActions = env.languageService.getCodeFixesAtPosition(ENTRY_POINT, from, to, [v.category], {}, {});
+                let diag = ({
+                    from,
+                    to,
+                    message: v.messageText,
+                    source: v === null || v === void 0 ? void 0 : v.source,
+                    severity: ["warning", "error", "info", "info"][v.category],
+                    // actions: codeActions as any as Diagnostic["actions"]
+                });
+                return diag;
+            })
         });
     });
 })();

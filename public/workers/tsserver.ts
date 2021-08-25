@@ -1,6 +1,10 @@
 importScripts("https://unpkg.com/@typescript/vfs@1.3.4/dist/vfs.globals.js");
-importScripts("https://cdnjs.cloudflare.com/ajax/libs/typescript/4.4.1-rc/typescript.min.js");
+importScripts("https://cdnjs.cloudflare.com/ajax/libs/typescript/4.3.5/typescript.min.js");
 importScripts("https://unpkg.com/@okikio/emitter@2.1.7/lib/api.js");
+
+export type VFS = typeof import("@typescript/vfs");
+export type EVENT_EMITTER = import("@okikio/emitter").EventEmitter;
+export type Diagnostic = import("@codemirror/lint").Diagnostic;
 
 var { createDefaultMapFromCDN, createSystem, createVirtualTypeScriptEnvironment } = globalThis.tsvfs as VFS;
 var ts = globalThis.ts; // as TS
@@ -12,7 +16,14 @@ globalThis.localStorage = globalThis.localStorage ?? {} as Storage;
 
 (async () => {
     const compilerOpts = {
-        target: ts.ScriptTarget.ES2020
+        target: ts.ScriptTarget.ES2021,
+        module: ts.ScriptTarget.ES2020,
+        "lib": [
+            "ES2020",
+            "DOM",
+            "WebWorker"
+        ],
+        "esModuleInterop": true,
     };
 
     let initialText = "const hello = 'hi'";
@@ -28,7 +39,6 @@ globalThis.localStorage = globalThis.localStorage ?? {} as Storage;
     const env = createVirtualTypeScriptEnvironment(system, [ENTRY_POINT], ts, compilerOpts);
 
     // You can then interact with the languageService to introspect the code
-    // env.languageService.getDocumentHighlights(ENTRY_POINT, 0, [ENTRY_POINT]);
     postMessage({
         event: "ready",
         details: []
@@ -44,20 +54,22 @@ globalThis.localStorage = globalThis.localStorage ?? {} as Storage;
 
         postMessage({
             event: "autocomplete-results",
-            details: result
+            details: result.entries.map((v) => {
+                // let details = env.languageService.getCompletionEntryDetails(ENTRY_POINT, pos, v.name, {}, v.source, {}, v.data);
+                return { ...v };
+            })
         })
     })
 
     _emitter.on("tooltip-request", ({ pos }) => {
         let result = env.languageService.getQuickInfoAtPosition(ENTRY_POINT, pos);
 
-                                
         postMessage({
             event: "tooltip-results",
-            details: result ? { 
-                result, 
-                tootltipText: ts.displayPartsToString(result.displayParts) + 
-                    (result.documentation?.length ? "\n" + ts.displayPartsToString(result.documentation)  : "")
+            details: result ? {
+                result,
+                tootltipText: ts.displayPartsToString(result.displayParts) +
+                    (result.documentation?.length ? "\n" + ts.displayPartsToString(result.documentation) : "")
             } : { result, tooltipText: "" }
         })
     })
@@ -66,17 +78,28 @@ globalThis.localStorage = globalThis.localStorage ?? {} as Storage;
         let SyntacticDiagnostics = env.languageService.getSyntacticDiagnostics(ENTRY_POINT);
         let SemanticDiagnostic = env.languageService.getSemanticDiagnostics(ENTRY_POINT);
         let SuggestionDiagnostics = env.languageService.getSuggestionDiagnostics(ENTRY_POINT);
+
         type Diagnostics = typeof SyntacticDiagnostics & typeof SemanticDiagnostic & typeof SuggestionDiagnostics;
-        let result: Diagnostics  = [].concat(SyntacticDiagnostics, SemanticDiagnostic, SuggestionDiagnostics);
+        let result: Diagnostics = [].concat(SyntacticDiagnostics, SemanticDiagnostic, SuggestionDiagnostics);
+
         postMessage({
             event: "lint-results",
-            details: result.map(v => ({
-                from: v.start,
-                to: v.start + v.length,
-                message: v.messageText,
-                source: v?.source,
-                severity: "warning"
-            }))
+            details: result.map(v => {
+                let from = v.start;
+                let to = v.start + v.length;
+                // let codeActions = env.languageService.getCodeFixesAtPosition(ENTRY_POINT, from, to, [v.category], {}, {});
+
+                let diag: Diagnostic = ({
+                    from,
+                    to,
+                    message: v.messageText as string,
+                    source: v?.source,
+                    severity: ["warning", "error", "info", "info"][v.category] as Diagnostic["severity"],
+                    // actions: codeActions as any as Diagnostic["actions"]
+                });
+
+                return diag;
+            })
         })
     })
 })();
