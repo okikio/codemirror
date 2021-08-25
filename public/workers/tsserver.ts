@@ -54,10 +54,7 @@ globalThis.localStorage = globalThis.localStorage ?? {} as Storage;
 
         postMessage({
             event: "autocomplete-results",
-            details: result.entries.map((v) => {
-                // let details = env.languageService.getCompletionEntryDetails(ENTRY_POINT, pos, v.name, {}, v.source, {}, v.data);
-                return { ...v };
-            })
+            details: result
         })
     })
 

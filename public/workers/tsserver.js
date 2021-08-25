@@ -40,10 +40,7 @@ globalThis.localStorage = (_a = globalThis.localStorage) !== null && _a !== void
         let result = env.languageService.getCompletionsAtPosition(ENTRY_POINT, pos, {});
         postMessage({
             event: "autocomplete-results",
-            details: result.entries.map((v) => {
-                // let details = env.languageService.getCompletionEntryDetails(ENTRY_POINT, pos, v.name, {}, v.source, {}, v.data);
-                return Object.assign({}, v);
-            })
+            details: result
         });
     });
     _emitter.on("tooltip-request", ({ pos }) => {

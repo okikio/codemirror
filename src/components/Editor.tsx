@@ -19,7 +19,6 @@ import type { Tooltip } from "@codemirror/tooltip";
 import type * as ts from "@typescript/vfs";
 
 import Codemirror from "./codemirror";
-
 const emitter = new EventEmitter();
 export default ({ children }) => {
     let editorEl: HTMLDivElement;
@@ -64,7 +63,7 @@ export default ({ children }) => {
 
                             return completeFromList(
                                 // @ts-ignore
-                                completions.map((c, i) => {
+                                completions.entries.map((c, i) => {
                                     let suggestions: Completion = ({
                                         type: c.kind,
                                         label: c.name,
