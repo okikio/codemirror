@@ -1,6 +1,6 @@
 var _a;
-importScripts("https://unpkg.com/@typescript/vfs@1.3.4/dist/vfs.globals.js");
-importScripts("https://cdnjs.cloudflare.com/ajax/libs/typescript/4.3.5/typescript.min.js");
+importScripts("https://unpkg.com/@typescript/vfs@1.3.5/dist/vfs.globals.js");
+importScripts("https://cdnjs.cloudflare.com/ajax/libs/typescript/4.4.3/typescript.min.js");
 importScripts("https://unpkg.com/@okikio/emitter@2.1.7/lib/api.js");
 var { createDefaultMapFromCDN, createSystem, createVirtualTypeScriptEnvironment } = globalThis.tsvfs;
 var ts = globalThis.ts; // as TS
@@ -12,9 +12,10 @@ globalThis.localStorage = (_a = globalThis.localStorage) !== null && _a !== void
         target: ts.ScriptTarget.ES2021,
         module: ts.ScriptTarget.ES2020,
         "lib": [
-            "ES2020",
-            "DOM",
-            "WebWorker"
+            "es2021",
+            "es2020",
+            "dom",
+            "webworker"
         ],
         "esModuleInterop": true,
     };
