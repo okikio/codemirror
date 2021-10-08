@@ -7,7 +7,9 @@ import {
     HighlightStyle
 } from "@codemirror/highlight";
 
-import theme from "@primer/primitives/dist/json/colors_v2/dark_dimmed.json";
+import primer from "@primer/primitives";
+const theme = primer.colors.dark;
+// /dist/json/colors_v2/dark_dimmed.json
 
 export const COLORS = {
     text: "#adbac7",
@@ -30,7 +32,8 @@ export const COLORS = {
         string: "#96d0ff",
         support: "#6cb6ff",
         variable: "#f69d50"
-    }
+    },
+    ...(theme.codemirror)
 };
 
 export const THEME = EditorView.theme(
