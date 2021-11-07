@@ -11,12 +11,9 @@ import debounce from "lodash.debounce";
 import debounceAsync from "debounce-async";
 const asyncdebounce = debounceAsync.default;
 
-
 import type { CompletionContext, CompletionResult, Completion } from "@codemirror/autocomplete";
 import type { ViewUpdate } from "@codemirror/view";
 import type { Tooltip } from "@codemirror/tooltip";
-
-import type * as ts from "@typescript/vfs";
 
 import Codemirror from "./codemirror";
 const emitter = new EventEmitter();

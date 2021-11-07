@@ -1,6 +1,6 @@
 var _a;
 importScripts("https://unpkg.com/@typescript/vfs@1.3.5/dist/vfs.globals.js");
-importScripts("https://cdnjs.cloudflare.com/ajax/libs/typescript/4.4.3/typescript.min.js");
+importScripts("https://cdnjs.cloudflare.com/ajax/libs/typescript/4.4.4/typescript.min.js");
 importScripts("https://unpkg.com/@okikio/emitter@2.1.7/lib/api.js");
 var { createDefaultMapFromCDN, createSystem, createVirtualTypeScriptEnvironment } = globalThis.tsvfs;
 var ts = globalThis.ts; // as TS

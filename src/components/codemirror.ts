@@ -7,12 +7,12 @@ import { THEME, HIGHTLIGHT_STYLE } from "./editor-theme";
 
 import type { Extension } from "@codemirror/state";
 
-const doc = `\
+const initalText = `\
 // Click Run for the Bundled + Minified + Gzipped package size
 export * from "@okikio/animate";
 `;
 
-export default (parentEl: HTMLElement, extentions?: Extension) => { 
+export default (parentEl: HTMLElement, extentions?: Extension, doc = initalText) => { 
     return new EditorView({
         state: EditorState.create({
             doc,

@@ -1,5 +1,5 @@
 importScripts("https://unpkg.com/@typescript/vfs@1.3.5/dist/vfs.globals.js");
-importScripts("https://cdnjs.cloudflare.com/ajax/libs/typescript/4.4.3/typescript.min.js");
+importScripts("https://cdnjs.cloudflare.com/ajax/libs/typescript/4.4.4/typescript.min.js");
 importScripts("https://unpkg.com/@okikio/emitter@2.1.7/lib/api.js");
 
 export type VFS = typeof import("@typescript/vfs");
@@ -17,7 +17,7 @@ globalThis.localStorage = globalThis.localStorage ?? {} as Storage;
 (async () => {
     const compilerOpts = {
         target: ts.ScriptTarget.ES2021,
-        module: ts.ScriptTarget.ES2020,
+        module: ts.ModuleKind.ES2020,
         "lib": [
             "es2021",
             "es2020",
