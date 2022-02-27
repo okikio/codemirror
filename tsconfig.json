@@ -1,5 +1,11 @@
 {
     "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "jsx": "preserve",
+        "jsxImportSource": "solid-js",
+        "types": [
+            "vite/client"
+        ],
         "moduleResolution": "node",
         "target": "ES2021",
         "module": "ES2022",

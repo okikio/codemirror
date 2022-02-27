@@ -5,10 +5,9 @@ import { hoverTooltip } from '@codemirror/tooltip';
 import { EditorView, ViewPlugin } from '@codemirror/view';
 import {
     RequestManager,
-    Client,
-    // WebSocketTransport,
-} from '@open-rpc/client-js';
-import { PostMessageWorkerTransport } from "./PostMessageWorkerTransport";
+    Client
+} from '../open-rpc-client-js';
+import { PostMessageWorkerTransport } from "../open-rpc-client-js/transports/PostMessageWorkerTransport";
 import {
     DiagnosticSeverity,
     CompletionItemKind,
@@ -91,17 +90,9 @@ class LanguageServerPlugin implements PluginValue {
         this.languageId = this.view.state.facet(languageId);
         this.documentVersion = 0;
         this.changesTimeout = 0;
-        // const transport = new PostMessageWorkerTransport("http://localhost:8545");
-        // // @ts-ignore
-        // const client = new Client(new RequestManager([transport]));
-        // const result = await client.request({method: "addition", params: [2, 2]});
         this.transport = new PostMessageWorkerTransport(
             this.view.state.facet(serverWorker)
         );
-        // new WebSocketTransport(
-        //     this.view.state.facet(serverUri)
-        // );
-        // @ts-ignore
         this.requestManager = new RequestManager([this.transport]);
         this.client = new Client(this.requestManager);
         this.client.onNotification((data) => {

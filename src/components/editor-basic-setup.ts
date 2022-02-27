@@ -1,4 +1,4 @@
-import {keymap, highlightSpecialChars, drawSelection, highlightActiveLine} from "@codemirror/view"
+import {keymap, highlightSpecialChars, drawSelection, highlightActiveLine, dropCursor} from "@codemirror/view"
 import {Extension, EditorState} from "@codemirror/state"
 import {history, historyKeymap} from "@codemirror/history"
 import {foldGutter, foldKeymap} from "@codemirror/fold"
@@ -27,6 +27,7 @@ import {lintKeymap} from "@codemirror/lint"
 ///  - [the undo history](#history.history)
 ///  - [a fold gutter](#fold.foldGutter)
 ///  - [custom selection drawing](#view.drawSelection)
+///  - [drop cursor](#view.dropCursor)
 ///  - [multiple selections](#state.EditorState^allowMultipleSelections)
 ///  - [reindentation on input](#language.indentOnInput)
 ///  - [the default highlight style](#highlight.defaultHighlightStyle) (as fallback)
@@ -49,16 +50,17 @@ import {lintKeymap} from "@codemirror/lint"
 /// take this package's source (which is just a bunch of imports and
 /// an array literal), copy it into your own code, and adjust it as
 /// desired.
-export const BASIC_SETUP: Extension = [
+export const BASIC_SETUP: Extension = [  
   lineNumbers(),
   highlightActiveLineGutter(),
   highlightSpecialChars(),
-  history(),  
+  history(),
   foldGutter({
       openText: "expand_more",
       closedText: "chevron_right"
   }),
   drawSelection(),
+  dropCursor(),
   EditorState.allowMultipleSelections.of(true),
   indentOnInput(),
   defaultHighlightStyle.fallback,

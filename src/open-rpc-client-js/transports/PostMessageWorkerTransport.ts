@@ -1,5 +1,5 @@
 import { Transport } from "./Transport";
-import { JSONRPCRequestData, IJSONRPCData, getNotifications } from "./Request";
+import { JSONRPCRequestData, IJSONRPCData, getNotifications } from "../Request";
 
 export class PostMessageWorkerTransport extends Transport {
   public uri: string;
@@ -22,6 +22,7 @@ export class PostMessageWorkerTransport extends Transport {
     });
   }
   private messageHandler = (ev: MessageEvent) => {
+    console.log("Message Handler", ev.data)
     this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
   }
   public connect(): Promise<any> {
@@ -32,6 +33,7 @@ export class PostMessageWorkerTransport extends Transport {
         //   reject(new Error("Bad URI"));
         // }
         // this.worker = await this.createWorker(this.uri);
+        // this.worker.postMessage(["--useSingleInferredProject", "--locale=en"]);
         this.worker.addEventListener("message", this.messageHandler);
         resolve();
       } catch (err) { 
@@ -51,9 +53,11 @@ export class PostMessageWorkerTransport extends Transport {
   }
 
   public close(): void {
-    const el = document.getElementById(this.postMessageID);
-    el?.remove();
+    // const el = document.getElementById(this.postMessageID);
+    // el?.remove();
     this.worker.removeEventListener("message", this.messageHandler);
+    this.worker.terminate();
+
   }
 
 }

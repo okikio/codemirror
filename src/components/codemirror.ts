@@ -7,6 +7,19 @@ import { THEME, HIGHTLIGHT_STYLE } from "./editor-theme";
 
 import type { Extension } from "@codemirror/state";
 
+/* 
+
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}
+*/
 const initalText = `\
 // Click Run for the Bundled + Minified + Gzipped package size
 export * from "@okikio/animate";
