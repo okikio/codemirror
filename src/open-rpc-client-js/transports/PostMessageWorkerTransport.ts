@@ -22,7 +22,6 @@ export class PostMessageWorkerTransport extends Transport {
     });
   }
   private messageHandler = (ev: MessageEvent) => {
-    console.log("Message Handler", ev.data)
     this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
   }
   public connect(): Promise<any> {

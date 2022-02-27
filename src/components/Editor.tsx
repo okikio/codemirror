@@ -3,11 +3,10 @@ import Codemirror from "./codemirror";
 
 import { languageServer } from './lsps';
 export const ls = languageServer({
-    // json-server
-    serverWorker: new Worker(new URL('./tsserver.ts', import.meta.url), { type: 'module', name: "ts-server" }),
+    serverWorker: new Worker(new URL('./json-server.ts', import.meta.url), { type: 'module', name: "json-server" }),
     rootUri: 'file:///',
-    documentUri: `file:///index.ts`, // tsconfig.json
-    languageId: 'ts' // json // As defined at https://microsoft.github.io/language-server-protocol/specification#textDocumentItem.
+    documentUri: `file:///tsconfig.json`, // 
+    languageId: 'json' // json // As defined at https://microsoft.github.io/language-server-protocol/specification#textDocumentItem.
 });
 
 export default () => {

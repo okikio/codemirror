@@ -320,7 +320,7 @@ class LanguageServerPlugin implements PluginValue {
         if (token) {
             pos = token.from;
             const word = token.text.toLowerCase();
-            if (/^\w+$/.test(word)) {
+            if (/^\S+$/.test(word)) {
                 options = options
                     .filter(({ filterText }) =>
                         filterText.toLowerCase().startsWith(word)
@@ -407,6 +407,7 @@ export function languageServer(options: LanguageServerOptions) {
                 ) ?? null
         ),
         autocompletion({
+            activateOnTyping: true,
             override: [
                 async (context) => {
                     if (plugin == null) return null;
@@ -431,7 +432,7 @@ export function languageServer(options: LanguageServerOptions) {
                     ) {
                         return null;
                     }
-                    return await plugin.requestCompletion(
+                    let res = await plugin.requestCompletion(
                         context,
                         offsetToPos(state.doc, pos),
                         {
@@ -439,6 +440,8 @@ export function languageServer(options: LanguageServerOptions) {
                             triggerCharacter: trigChar,
                         }
                     );
+                    console.log("Completion ", res)
+                    return res;
                 },
             ],
         }),

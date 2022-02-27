@@ -9,6 +9,7 @@ specifiers:
   '@codemirror/highlight': ^0.19.7
   '@codemirror/history': ^0.19.2
   '@codemirror/lang-javascript': ^0.19.7
+  '@codemirror/lang-json': ^0.19.2
   '@codemirror/lint': ^0.19.5
   '@codemirror/rectangular-selection': ^0.19.1
   '@codemirror/search': ^0.19.8
@@ -33,6 +34,7 @@ dependencies:
   '@codemirror/highlight': 0.19.7
   '@codemirror/history': 0.19.2
   '@codemirror/lang-javascript': 0.19.7
+  '@codemirror/lang-json': 0.19.2
   '@codemirror/lint': 0.19.5
   '@codemirror/rectangular-selection': 0.19.1
   '@codemirror/search': 0.19.8
@@ -454,6 +456,14 @@ packages:
       '@lezer/javascript': 0.15.3
     dev: false
 
+  /@codemirror/lang-json/0.19.2:
+    resolution: {integrity: sha512-fgUWR58Is59P5D/tiazX6oTczioOCDYqjFT5PEBAmLBFMSsRqcnJE0xNO1snrhg7pWEFDq5wR/oN0eZhkeR6Gg==}
+    dependencies:
+      '@codemirror/highlight': 0.19.7
+      '@codemirror/language': 0.19.7
+      '@lezer/json': 0.15.0
+    dev: false
+
   /@codemirror/language/0.19.7:
     resolution: {integrity: sha512-pNNUtYWMIMG0lUSKyUXJr8U0rFiCKsKFXbA2Oj17PC+S1FY99hV0z1vcntW67ekAIZw9DMEUQnLsKBuIbAUX7Q==}
     dependencies:
@@ -566,6 +576,12 @@ packages:
 
   /@lezer/javascript/0.15.3:
     resolution: {integrity: sha512-8jA2NpOfpWwSPZxRhd9BxK2ZPvGd7nLE3LFTJ5AbMhXAzMHeMjneV6GEVd7dAIee85dtap0jdb6bgOSO0+lfwA==}
+    dependencies:
+      '@lezer/lr': 0.15.8
+    dev: false
+
+  /@lezer/json/0.15.0:
+    resolution: {integrity: sha512-OsMjjBkTkeQ15iMCu5U1OiBubRC4V9Wm03zdIlUgNZ20aUPx5DWDRqUc5wG41JXVSj7Lxmo+idlFCfBBdxB8sw==}
     dependencies:
       '@lezer/lr': 0.15.8
     dev: false
