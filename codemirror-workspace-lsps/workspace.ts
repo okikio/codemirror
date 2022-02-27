@@ -11,8 +11,8 @@ import { KeyBinding, keymap, ViewUpdate } from "@codemirror/view";
 import { indentWithTab } from "@codemirror/commands";
 import { javascript } from "@codemirror/lang-javascript";
 
-import { BASIC_SETUP, EditorView, EditorState } from "../editor-basic-setup";
-import { THEME, HIGHTLIGHT_STYLE } from "../editor-theme";
+import { BASIC_SETUP, EditorView, EditorState } from "../src/components/editor-basic-setup";
+import { THEME, HIGHTLIGHT_STYLE } from "../src/components/editor-theme";
 
 // import { normalizeKeyMap } from "codemirror";
 

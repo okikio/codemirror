@@ -34,7 +34,7 @@ marked.use({
 });
 
 const initialText = `export * from "@okikio/animate";`;
-import Codemirror from "./codemirror";
+import Codemirror from "../src/components/codemirror";
 
 const config: CodeMirror.EditorConfiguration = {
   theme: "idea",
