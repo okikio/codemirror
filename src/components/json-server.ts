@@ -12,7 +12,8 @@ import {
     HoverRequest,
     InitializeRequest,
     InitializeResult,
-    TextDocumentSyncKind,
+  TextDocumentSyncKind,
+  PublishDiagnosticsNotification
   } from "vscode-languageserver-protocol";
   import { getLanguageService, TextDocument } from "vscode-json-languageservice";
   
@@ -73,6 +74,12 @@ import {
       }
     }
   );
+  conn.onRequest(PublishDiagnosticsNotification.type, async ({ textDocument, position }) => {
+    const doc = docs[textDocument.uri];
+    if (!doc) return null;
+  
+    return jsonService.doValidation(doc, jsonService.parseJSONDocument(doc));
+  });
   conn.onRequest(CompletionRequest.type, async ({ textDocument, position }) => {
     const doc = docs[textDocument.uri];
     if (!doc) return null;

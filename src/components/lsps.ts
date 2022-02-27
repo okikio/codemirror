@@ -12,6 +12,10 @@ import {
     DiagnosticSeverity,
     CompletionItemKind,
     CompletionTriggerKind,
+    DiagnosticTag,
+    FileEvent,
+    SignatureHelpTriggerKind,
+    TextDocumentSaveReason,
 } from 'vscode-languageserver-protocol';
 
 import type {
@@ -97,6 +101,7 @@ class LanguageServerPlugin implements PluginValue {
         this.client = new Client(this.requestManager);
         this.client.onNotification((data) => {
             this.processNotification(data as any);
+            console.log(data)
         });
         this.initialize({
             documentText: this.view.state.doc.toString(),
@@ -147,6 +152,15 @@ class LanguageServerPlugin implements PluginValue {
                         didSave: false,
                         willSaveWaitUntil: false,
                     },
+                    
+                    publishDiagnostics: {
+                        relatedInformation: true,
+                        tagSupport: {
+                            valueSet: [DiagnosticTag.Unnecessary, DiagnosticTag.Deprecated],
+                        },
+                        moniker: {},
+                    },
+
                     completion: {
                         dynamicRegistration: true,
                         completionItem: {
@@ -185,6 +199,9 @@ class LanguageServerPlugin implements PluginValue {
                     didChangeConfiguration: {
                         dynamicRegistration: true,
                     },
+                    // didChangeWatchedFiles: {
+                    //   dynamicRegistration: false,
+                    // },
                 },
             },
             initializationOptions: null,
@@ -226,6 +243,7 @@ class LanguageServerPlugin implements PluginValue {
     }
 
     requestDiagnostics(view: EditorView) {
+        // if (!this.ready || !this.capabilities!.publishDiagnostics) return null;
         this.sendChange({ documentText: view.state.doc.toString() });
     }
 
