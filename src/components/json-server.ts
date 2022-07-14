@@ -12,9 +12,9 @@ import {
     HoverRequest,
     InitializeRequest,
     InitializeResult,
-  TextDocumentSyncKind,
-  PublishDiagnosticsNotification
-  } from "vscode-languageserver-protocol";
+    TextDocumentSyncKind,
+    PublishDiagnosticsNotification
+  } from "vscode-languageserver-protocol/browser";
   import { getLanguageService, TextDocument } from "vscode-json-languageservice";
   
   const jsonService = getLanguageService({
