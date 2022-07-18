@@ -440,14 +440,14 @@ export function languageServer(options: LanguageServerOptions) {
               line.text[pos - line.from - 1]
             )
           ) {
+            console.log(line.text)
             trigKind = CompletionTriggerKind.TriggerCharacter;
             trigChar = line.text[pos - line.from - 1];
           }
           if (
             trigKind === CompletionTriggerKind.Invoked &&
-            !context.matchBefore(/\w+$/)
+            !context.matchBefore(/(?:\"|\.|\w)+$/)
           ) {
-            console.log("Completion ", plugin, trigKind)
             return null;
           }
           let res = await plugin.requestCompletion(
@@ -458,6 +458,7 @@ export function languageServer(options: LanguageServerOptions) {
               triggerCharacter: trigChar,
             }
           );
+          console.log("Completion ", res, { trigKind, trigChar })
           return res;
         },
       ],
