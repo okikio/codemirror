@@ -1,7 +1,8 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@astrojs/solid-js': ^0.4.0
+  '@babel/core': ^7.18.6
   '@codemirror/autocomplete': ^6.0.4
   '@codemirror/commands': ^6.0.1
   '@codemirror/lang-javascript': ^6.0.1
@@ -9,16 +10,16 @@ specifiers:
   '@codemirror/language': ^6.2.0
   '@codemirror/lint': ^6.0.0
   '@codemirror/search': ^6.0.0
+  '@codemirror/state': ^6.1.0
   '@codemirror/view': ^6.0.3
   '@lezer/highlight': ^1.0.0
   '@primer/primitives': ^7.8.4
-  '@volar/typescript-language-service': ^0.38.5
-  astro: ^1.0.0-beta.72
+  '@volar/typescript-language-service': ^0.38.8
+  astro: 1.0.0-beta.72
   codemirror: ^6.0.1
   events: ^3.3.0
   isomorphic-fetch: ^3.0.0
-  isomorphic-ws: ^5.0.0
-  solid-js: ^1.4.3
+  solid-js: ^1.4.7
   strict-event-emitter-types: ^2.0.0
   typescript: ^4.7.4
   vscode-json-languageservice: ^5.1.0
@@ -31,20 +32,21 @@ dependencies:
   '@codemirror/language': 6.2.0
   '@codemirror/lint': 6.0.0
   '@codemirror/search': 6.0.0
+  '@codemirror/state': 6.1.0
   '@codemirror/view': 6.0.3
   '@lezer/highlight': 1.0.0
   '@primer/primitives': 7.8.4
-  '@volar/typescript-language-service': 0.38.5
+  '@volar/typescript-language-service': 0.38.8
   codemirror: 6.0.1
   events: 3.3.0
   isomorphic-fetch: 3.0.0
-  isomorphic-ws: 5.0.0
   strict-event-emitter-types: 2.0.0
   typescript: 4.7.4
   vscode-json-languageservice: 5.1.0
 
 devDependencies:
-  '@astrojs/solid-js': 0.4.0_solid-js@1.4.7
+  '@astrojs/solid-js': 0.4.0_3czbc23nqkmh4e66ssbg3l5ccy
+  '@babel/core': 7.18.6
   astro: 1.0.0-beta.72
   solid-js: 1.4.7
 
@@ -130,13 +132,13 @@ packages:
     engines: {node: ^14.20.0 || >=16.14.0}
     dev: true
 
-  /@astrojs/solid-js/0.4.0_solid-js@1.4.7:
+  /@astrojs/solid-js/0.4.0_3czbc23nqkmh4e66ssbg3l5ccy:
     resolution: {integrity: sha512-OEDFzp7qhc/fB+QyS6xCBedJXSIIcLInHCi831c7SvREYXLSnqbUxkiiiQzX7fHS7D7tdb6p01rhWkodUGbEng==}
     engines: {node: ^14.20.0 || >=16.14.0}
     peerDependencies:
       solid-js: ^1.4.3
     dependencies:
-      babel-preset-solid: 1.4.6
+      babel-preset-solid: 1.4.6_@babel+core@7.18.6
       solid-js: 1.4.7
     transitivePeerDependencies:
       - '@babel/core'
@@ -146,7 +148,7 @@ packages:
     resolution: {integrity: sha512-nqczE674kz7GheKSWQwTOL6+NGHghc4INQox048UyHJRaIKHEbCPyFLDBDVY7QJH0jug1komCJ8OZXUn6Z3eLA==}
     dependencies:
       svelte: 3.49.0
-      svelte2tsx: 0.5.11_svelte@3.49.0+typescript@4.6.4
+      svelte2tsx: 0.5.11_ueozcsexptisi2awlbuwt6eqmq
     transitivePeerDependencies:
       - typescript
     dev: true
@@ -340,15 +342,8 @@ packages:
     resolution: {integrity: sha512-RSKRfYX20dyH+elbJK2uqAkVyucL+xXzhqlMD5/ZXx+dAAwpyB7HsvnHe/ZUGOF+xLr5Wx9/JoXVTj6BQE2/oA==}
     engines: {node: '>=6.0.0'}
     hasBin: true
-    dev: true
-
-  /@babel/plugin-syntax-jsx/7.18.6:
-    resolution: {integrity: sha512-6mmljtAedFGTWu2p/8WIORGwy+61PLgOMPOdazc7YoJ9ZCWUyFy3A6CpPkRKLKD1ToAesxX8KGEViAiLo9N+7Q==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/helper-plugin-utils': 7.18.6
+      '@babel/types': 7.18.8
     dev: true
 
   /@babel/plugin-syntax-jsx/7.18.6_@babel+core@7.18.6:
@@ -687,8 +682,8 @@ packages:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
     dev: true
 
-  /@volar/shared/0.38.5:
-    resolution: {integrity: sha512-PwvZ45IquUwioHpZfWNAI/sfKL+j0zGRvzeQwGlD6lt99BTyepz6xQ1aV8I7c2J9kAkJRZV6MxW2IBOILXNjeg==}
+  /@volar/shared/0.38.8:
+    resolution: {integrity: sha512-4Ao9w++aTd8Dw4fsS6/B+iMJ9bq8n9HpYsCe/SJYHS+PorxYltUfmmdOzByI1gvX1KhU523Ej5yC/gtQAJiWCQ==}
     dependencies:
       upath: 2.0.1
       vscode-languageserver-protocol: 3.17.2
@@ -696,10 +691,10 @@ packages:
       vscode-uri: 3.0.3
     dev: false
 
-  /@volar/typescript-language-service/0.38.5:
-    resolution: {integrity: sha512-RqeRMPIleP+MXXJsZ/KpINwtKM10EyrNvnHfxek0y2mAOSW454vM+kPg54hvNpIJq6nRHvwF1trdEFASFEEqzg==}
+  /@volar/typescript-language-service/0.38.8:
+    resolution: {integrity: sha512-3ZFAEFoUtTqdDuA17epItl1gAFZ3Qk1IssBQ7gISuZQkrthjwm/tFa5WZhDyhxlHxQMTnM6SBfC4Oa5R/kR26A==}
     dependencies:
-      '@volar/shared': 0.38.5
+      '@volar/shared': 0.38.8
       semver: 7.3.7
       upath: 2.0.1
       vscode-languageserver-protocol: 3.17.2
@@ -842,7 +837,7 @@ packages:
       prompts: 2.4.2
       recast: 0.20.5
       resolve: 1.22.1
-      rollup: 2.76.0
+      rollup: 2.77.0
       semver: 7.3.7
       shiki: 0.10.1
       sirv: 2.0.2
@@ -854,7 +849,7 @@ packages:
       tsconfig-resolver: 3.0.1
       vite: 2.9.14
       yargs-parser: 21.0.1
-      zod: 3.17.3
+      zod: 3.17.5
     transitivePeerDependencies:
       - less
       - sass
@@ -868,23 +863,25 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /babel-plugin-jsx-dom-expressions/0.33.12:
+  /babel-plugin-jsx-dom-expressions/0.33.12_@babel+core@7.18.6:
     resolution: {integrity: sha512-FQeNcBvC+PrPYGpeUztI7AiiAqJL2H8e7mL4L6qHZ7B4wZfbgyREsHZwKmmDqxAehlyAUolTdhDNk9xfyHdIZw==}
     peerDependencies:
       '@babel/core': ^7.0.0
     dependencies:
+      '@babel/core': 7.18.6
       '@babel/helper-module-imports': 7.16.0
-      '@babel/plugin-syntax-jsx': 7.18.6
+      '@babel/plugin-syntax-jsx': 7.18.6_@babel+core@7.18.6
       '@babel/types': 7.18.8
       html-entities: 2.3.2
     dev: true
 
-  /babel-preset-solid/1.4.6:
+  /babel-preset-solid/1.4.6_@babel+core@7.18.6:
     resolution: {integrity: sha512-5n+nm1zgj7BK9cv0kYu0p+kbsXgGbrxLmA5bv5WT0V5WnqRgshWILInPWLJNZbvP5gBj+huDKwk3J4RhhbFlhA==}
     peerDependencies:
       '@babel/core': ^7.0.0
     dependencies:
-      babel-plugin-jsx-dom-expressions: 0.33.12
+      '@babel/core': 7.18.6
+      babel-plugin-jsx-dom-expressions: 0.33.12_@babel+core@7.18.6
     dev: true
 
   /bail/2.0.2:
@@ -929,8 +926,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001366
-      electron-to-chromium: 1.4.189
+      caniuse-lite: 1.0.30001367
+      electron-to-chromium: 1.4.192
       node-releases: 2.0.6
       update-browserslist-db: 1.0.4_browserslist@4.21.2
     dev: true
@@ -954,8 +951,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /caniuse-lite/1.0.30001366:
-    resolution: {integrity: sha512-yy7XLWCubDobokgzudpkKux8e0UOOnLHE6mlNJBzT3lZJz6s5atSEzjoL+fsCPkI0G8MP5uVdDx1ur/fXEWkZA==}
+  /caniuse-lite/1.0.30001367:
+    resolution: {integrity: sha512-XDgbeOHfifWV3GEES2B8rtsrADx4Jf+juKX2SICJcaUhjYBO3bR96kvEIHa15VU6ohtOhBZuPGGYGbXMRn0NCw==}
     dev: true
 
   /ccount/2.0.1:
@@ -1155,8 +1152,8 @@ packages:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
 
-  /electron-to-chromium/1.4.189:
-    resolution: {integrity: sha512-dQ6Zn4ll2NofGtxPXaDfY2laIa6NyCQdqXYHdwH90GJQW0LpJJib0ZU/ERtbb0XkBEmUD2eJtagbOie3pdMiPg==}
+  /electron-to-chromium/1.4.192:
+    resolution: {integrity: sha512-8nCXyIQY9An88NXAp+PuPy5h3/w5ZY7Iu2lag65Q0XREprcat5F8gKhoHsBUnQcFuCRnmevpR8yEBYRU3d2HDw==}
     dev: true
 
   /emmet/2.3.6:
@@ -2043,12 +2040,6 @@ packages:
       whatwg-fetch: 3.6.2
     transitivePeerDependencies:
       - encoding
-    dev: false
-
-  /isomorphic-ws/5.0.0:
-    resolution: {integrity: sha512-muId7Zzn9ywDsyXgTIafTry2sV3nySZeUDe6YedVd1Hvuuep5AsIlqK+XefWpYTyJG5e503F2xIuT2lcU6rCSw==}
-    peerDependencies:
-      ws: '*'
     dev: false
 
   /js-tokens/4.0.0:
@@ -3084,8 +3075,8 @@ packages:
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
     dev: true
 
-  /rollup/2.76.0:
-    resolution: {integrity: sha512-9jwRIEY1jOzKLj3nsY/yot41r19ITdQrhs+q3ggNWhr9TQgduHqANvPpS32RNpzGklJu3G1AJfvlZLi/6wFgWA==}
+  /rollup/2.77.0:
+    resolution: {integrity: sha512-vL8xjY4yOQEw79DvyXLijhnhh+R/O9zpF/LEgkCebZFtb6ELeN9H3/2T0r8+mp+fFTBHZ5qGpOpW2ela2zRt3g==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
@@ -3339,7 +3330,7 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /svelte2tsx/0.5.11_svelte@3.49.0+typescript@4.6.4:
+  /svelte2tsx/0.5.11_ueozcsexptisi2awlbuwt6eqmq:
     resolution: {integrity: sha512-Is95G1wqNvEUJZ9DITRS2zfMwVJRZztMduPs1vJJ0cm65WUg/avBl5vBXjHycQL/qmFpaqa3NG4qWnf7bCHPag==}
     peerDependencies:
       svelte: ^3.24
@@ -3604,7 +3595,7 @@ packages:
       esbuild: 0.14.49
       postcss: 8.4.14
       resolve: 1.22.1
-      rollup: 2.76.0
+      rollup: 2.77.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -3805,8 +3796,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zod/3.17.3:
-    resolution: {integrity: sha512-4oKP5zvG6GGbMlqBkI5FESOAweldEhSOZ6LI6cG+JzUT7ofj1ZOC0PJudpQOpT1iqOFpYYtX5Pw0+o403y4bcg==}
+  /zod/3.17.5:
+    resolution: {integrity: sha512-La5nhC8xGXEQBUohQq7e9R16yXQHjLfIa91wKQrbstTXA/GbAPGtiY2e/F05shumw+W0s3ms+R6LoIWGcMvJ4A==}
     dev: true
 
   /zwitch/2.0.2:

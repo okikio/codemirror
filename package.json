@@ -17,21 +17,22 @@
         "@codemirror/language": "^6.2.0",
         "@codemirror/lint": "^6.0.0",
         "@codemirror/search": "^6.0.0",
+        "@codemirror/state": "^6.1.0",
         "@codemirror/view": "^6.0.3",
         "@lezer/highlight": "^1.0.0",
         "@primer/primitives": "^7.8.4",
-        "@volar/typescript-language-service": "^0.38.5",
+        "@volar/typescript-language-service": "^0.38.8",
         "codemirror": "^6.0.1",
         "events": "^3.3.0",
         "isomorphic-fetch": "^3.0.0",
-        "isomorphic-ws": "^5.0.0",
         "strict-event-emitter-types": "^2.0.0",
         "typescript": "^4.7.4",
         "vscode-json-languageservice": "^5.1.0"
     },
     "devDependencies": {
         "@astrojs/solid-js": "^0.4.0",
-        "astro": "^1.0.0-beta.72",
-        "solid-js": "^1.4.3"
+        "@babel/core": "^7.18.6",
+        "astro": "1.0.0-beta.72",
+        "solid-js": "^1.4.7"
     }
 }
