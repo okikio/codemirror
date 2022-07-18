@@ -5,8 +5,8 @@ import { hoverTooltip, EditorView, ViewPlugin } from '@codemirror/view';
 import {
   RequestManager,
   Client
-} from '../open-rpc-client-js';
-import { PostMessageWorkerTransport } from "../open-rpc-client-js/transports/PostMessageWorkerTransport";
+} from '../bridge';
+import { PostMessageWorkerTransport } from "../bridge/transports/PostMessageWorkerTransport";
 import {
   DiagnosticSeverity,
   CompletionItemKind,

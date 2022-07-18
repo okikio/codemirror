@@ -8,7 +8,7 @@ import { foldGutter, foldKeymap, syntaxHighlighting } from "@codemirror/language
 import { linter, lintGutter, lintKeymap } from "@codemirror/lint";
 import { autocompletion, completionKeymap } from "@codemirror/autocomplete";
 
-import { THEME, HIGHTLIGHT_STYLE } from "./editor-theme";
+import { THEME, HIGHTLIGHT_STYLE } from "../components/editor-theme";
 import type { Extension } from "@codemirror/state";
 
 const initalText = `\

@@ -1,9 +1,9 @@
-import JSON_WORKER from "./json-server.ts?worker";
+import JSON_WORKER from "../workers/json-server.ts?worker";
 
 import { onMount } from "solid-js";
-import Codemirror from "./codemirror";
+import Codemirror from "../scripts/codemirror";
 
-import { languageServer } from "./lsps";
+import { languageServer } from "../scripts/lsps";
 
 export default () => {
   let editorEl: HTMLDivElement;
