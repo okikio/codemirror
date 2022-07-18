@@ -8,9 +8,9 @@ import {
   HighlightStyle
 } from "@codemirror/language";
 
-import primer from "@primer/primitives";
-const theme = primer.colors.dark;
-// /dist/json/colors_v2/dark_dimmed.json
+// @ts-ignore
+import PRIMER from "@primer/primitives/dist/ts/index.ts";
+const theme = PRIMER.colors.dark;
 
 export const COLORS = {
   text: "#adbac7",
