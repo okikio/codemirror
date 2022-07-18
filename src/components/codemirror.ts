@@ -39,9 +39,7 @@ export default (parentEl: HTMLElement, ext: Extension[] = [], doc = initalText) 
       keymap.of(foldKeymap),
 
       json(),
-
       linter(jsonParseLinter()),
-      autocompletion(),
 
       // foldGutter({
       //   openText: "expand_more",

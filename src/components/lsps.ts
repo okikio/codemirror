@@ -447,6 +447,7 @@ export function languageServer(options: LanguageServerOptions) {
             trigKind === CompletionTriggerKind.Invoked &&
             !context.matchBefore(/\w+$/)
           ) {
+            console.log("Completion ", plugin, trigKind)
             return null;
           }
           let res = await plugin.requestCompletion(
@@ -457,7 +458,6 @@ export function languageServer(options: LanguageServerOptions) {
               triggerCharacter: trigChar,
             }
           );
-          console.log("Completion ", res)
           return res;
         },
       ],
