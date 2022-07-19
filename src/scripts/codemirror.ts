@@ -2,7 +2,7 @@ import { EditorView, basicSetup as BASIC_SETUP } from "codemirror";
 import { keymap } from "@codemirror/view";
 
 import { indentWithTab } from "@codemirror/commands";
-import { json, jsonLanguage, jsonParseLinter } from "@codemirror/lang-json";
+import { javascript } from "@codemirror/lang-javascript";
 
 import { foldGutter, foldKeymap, syntaxHighlighting } from "@codemirror/language";
 import { linter, lintGutter, lintKeymap } from "@codemirror/lint";
@@ -12,16 +12,10 @@ import { THEME, HIGHTLIGHT_STYLE } from "../components/editor-theme";
 import type { Extension } from "@codemirror/state";
 
 const initalText = `\
-{
-    "compilerOptions": {
-      "target": "es2017",
-      "module": "commonjs",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true
-    }
-}
+export * from "@okikio/animate";
+export const el = () => {
+  return (<h1>Hello</h1>)
+};
 `;
 
 export default (parentEl: HTMLElement, ext: Extension[] = [], doc = initalText) => {
@@ -38,8 +32,10 @@ export default (parentEl: HTMLElement, ext: Extension[] = [], doc = initalText) 
       keymap.of(completionKeymap),
       keymap.of(foldKeymap),
 
-      json(),
-      linter(jsonParseLinter()),
+      javascript({
+        jsx: true,
+        typescript: true
+      }),
 
       // foldGutter({
       //   openText: "expand_more",
