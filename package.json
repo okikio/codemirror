@@ -10,18 +10,20 @@
         "preview": "astro preview"
     },
     "dependencies": {
-        "@codemirror/autocomplete": "^6.0.4",
+        "@codemirror/autocomplete": "^6.1.0",
         "@codemirror/commands": "^6.0.1",
-        "@codemirror/lang-javascript": "^6.0.1",
+        "@codemirror/lang-html": "^6.1.0",
+        "@codemirror/lang-javascript": "^6.0.2",
         "@codemirror/lang-json": "^6.0.0",
-        "@codemirror/language": "^6.2.0",
+        "@codemirror/language": "^6.2.1",
+        "@codemirror/language-data": "^6.1.0",
         "@codemirror/lint": "^6.0.0",
         "@codemirror/search": "^6.0.0",
         "@codemirror/state": "^6.1.0",
-        "@codemirror/view": "^6.0.3",
+        "@codemirror/view": "^6.1.0",
         "@lezer/highlight": "^1.0.0",
-        "@primer/primitives": "^7.8.4",
-        "@volar/typescript-language-service": "^0.38.8",
+        "@primer/primitives": "^7.9.0",
+        "@volar/typescript-language-service": "^0.38.9",
         "codemirror": "^6.0.1",
         "events": "^3.3.0",
         "isomorphic-fetch": "^3.0.0",
@@ -30,9 +32,9 @@
         "vscode-json-languageservice": "^5.1.0"
     },
     "devDependencies": {
-        "@astrojs/solid-js": "^0.4.0",
-        "@babel/core": "^7.18.6",
-        "astro": "1.0.0-beta.72",
+        "@astrojs/solid-js": "^0.4.1",
+        "@babel/core": "^7.18.9",
+        "astro": "1.0.0-beta.73",
         "solid-js": "^1.4.7"
     }
 }
