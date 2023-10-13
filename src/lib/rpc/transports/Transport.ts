@@ -1,3 +1,4 @@
+// Based off of https://www.npmjs.com/package/@open-rpc/client-js
 import type {
   JSONRPCRequestData,
   IJSONRPCNotificationResponse,

@@ -1,3 +1,4 @@
+// Based off of https://www.npmjs.com/package/@open-rpc/client-js
 import { Transport } from "./transports/Transport";
 import type { IJSONRPCRequest, IJSONRPCNotification, IBatchRequest } from "./Request";
 import { JSONRPCError } from "./Error";

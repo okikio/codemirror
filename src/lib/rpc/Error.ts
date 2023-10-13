@@ -1,3 +1,4 @@
+// Based off of https://www.npmjs.com/package/@open-rpc/client-js
 export const ERR_TIMEOUT = 7777;
 export const ERR_MISSIING_ID = 7878;
 export const ERR_UNKNOWN = 7979;

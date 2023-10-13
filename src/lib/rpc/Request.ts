@@ -1,4 +1,5 @@
 
+// Based off of https://www.npmjs.com/package/@open-rpc/client-js
 export type JSONRPCRequestData = IJSONRPCData | IBatchRequest[] ;
 
 export interface IJSONRPCData {

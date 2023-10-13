@@ -1,3 +1,4 @@
+// Based off of https://www.npmjs.com/package/@open-rpc/client-js
 import RequestManager from "./RequestManager";
 import { JSONRPCError } from "./Error";
 import type { IClient, RequestArguments, NotificationArguments } from "./ClientInterface";
