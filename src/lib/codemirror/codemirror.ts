@@ -7,7 +7,8 @@ import { THEME, HIGHTLIGHT_STYLE } from "@/lib/codemirror/editor-theme";
 
 import { Compartment, EditorState, type Extension } from "@codemirror/state";
 import { indentUnit, syntaxHighlighting } from "@codemirror/language";
-import { json, jsonLanguage } from "@codemirror/lang-json";
+import { json, jsonLanguage, jsonParseLinter } from "@codemirror/lang-json";
+import { linter } from "@codemirror/lint";
 
 const initalText = `\
 {
@@ -17,7 +18,7 @@ const initalText = `\
 		"strict": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
 	}
 }
 `;
@@ -40,6 +41,7 @@ export default (parentEl: HTMLElement, extentions?: Extension, doc = initalText)
 				// 	typescript: true
 				// }),
 				json(),
+				linter(jsonParseLinter()),
 				(extentions ? extentions : [])
 			]
 		}),

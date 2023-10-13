@@ -1,12 +1,15 @@
-import { autocompletion } from '@codemirror/autocomplete';
+import { autocompletion, startCompletion } from '@codemirror/autocomplete';
 import { setDiagnostics } from '@codemirror/lint';
 import { Facet } from '@codemirror/state';
-import { EditorView, ViewPlugin, hoverTooltip } from '@codemirror/view';
+import { EditorView, ViewPlugin, hoverTooltip, keymap } from '@codemirror/view';
+
+// https://www.npmjs.com/package/@open-rpc/client-js
 import {
 	RequestManager,
 	Client
 } from '@/lib/open-rpc-client-js';
 import { PostMessageWorkerTransport } from "@/lib/open-rpc-client-js/transports/PostMessageWorkerTransport";
+
 import {
 	DiagnosticSeverity,
 	CompletionItemKind,
@@ -410,36 +413,63 @@ export function languageServer(options: LanguageServerOptions) {
 					if (plugin == null) return null;
 
 					const { state, pos, explicit } = context;
-					const line = state.doc.lineAt(pos);
-					let trigKind: CompletionTriggerKind =
-						CompletionTriggerKind.Invoked;
-					let trigChar: string | undefined;
-					if (
-						!explicit &&
-						plugin.capabilities?.completionProvider?.triggerCharacters?.includes(
-							line.text[pos - line.from - 1]
+					try {
+						const line = state.doc.lineAt(pos);
+						let trigKind: CompletionTriggerKind =
+							CompletionTriggerKind.Invoked;
+						let trigChar: string | undefined;
+						if (
+							!explicit &&
+							plugin.capabilities?.completionProvider?.triggerCharacters?.includes(
+								line.text[pos - line.from - 1]
+							)
+						) {
+							trigKind = CompletionTriggerKind.TriggerCharacter;
+							trigChar = line.text[pos - line.from - 1];
+						}
+						
+						// if (
+						// 	trigKind === CompletionTriggerKind.Invoked &&
+						// 	!context.matchBefore(/\w+$/)
+						// ) {
+						// 	return null;
+						// }
+
+						const result = await plugin.requestCompletion(
+							context,
+							offsetToPos(state.doc, pos),
+							{
+								triggerKind: trigKind,
+								triggerCharacter: trigChar,
+							}
 						)
-					) {
-						trigKind = CompletionTriggerKind.TriggerCharacter;
-						trigChar = line.text[pos - line.from - 1];
-					}
-					if (
-						trigKind === CompletionTriggerKind.Invoked &&
-						!context.matchBefore(/\w+$/)
-					) {
+						console.log({
+							triggerChars: plugin.capabilities?.completionProvider?.triggerCharacters,
+							explicit,
+							trigKind,
+							context,
+							matchBefore: context.matchBefore(/\w+$/),
+							result
+						})
+						return result;
+
+					} catch (e) {
+						console.log("Unable to get completions", { pos, error: e });
 						return null;
 					}
-					return await plugin.requestCompletion(
-						context,
-						offsetToPos(state.doc, pos),
-						{
-							triggerKind: trigKind,
-							triggerCharacter: trigChar,
-						}
-					);
 				},
 			],
 		}),
+		keymap.of([
+			{
+				key: ",",
+				run: (x) => {
+					// TODO: fix this hack
+					setTimeout(() => startCompletion(x), 1);
+					return false;
+				},
+			},
+		]),
 		baseTheme,
 	];
 }

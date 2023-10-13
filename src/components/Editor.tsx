@@ -6,7 +6,6 @@ import { languageServer } from '@/lib/lsp/lsp';
 import JSONServerWorker from "@/lib/lsp/json-server?worker";
 const JSONServer = new JSONServerWorker();
 export const ls = languageServer({
-	// json-server
 	serverWorker: JSONServer,
 	rootUri: 'file:///',
 	documentUri: `file:///tsconfig.json`, // tsconfig.json
