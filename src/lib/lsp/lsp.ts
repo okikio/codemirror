@@ -7,8 +7,8 @@ import { EditorView, ViewPlugin, hoverTooltip, keymap } from '@codemirror/view';
 import {
 	RequestManager,
 	Client
-} from '@/lib/open-rpc-client-js';
-import { PostMessageWorkerTransport } from "@/lib/open-rpc-client-js/transports/PostMessageWorkerTransport";
+} from '@/lib/rpc';
+import { PostMessageWorkerTransport } from "@/lib/rpc/transports/PostMessageWorkerTransport";
 
 import {
 	DiagnosticSeverity,
