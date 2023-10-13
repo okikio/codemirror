@@ -1,10 +1,10 @@
-import {
+import type {
   JSONRPCRequestData,
   IJSONRPCNotificationResponse,
   IJSONRPCResponse,
 } from "../Request";
 
-import StrictEventEmitter from "strict-event-emitter-types";
+import type StrictEventEmitter from "strict-event-emitter-types";
 import { EventEmitter } from "events";
 import { JSONRPCError } from "../Error";
 import { TransportRequestManager } from "./TransportRequestManager";
@@ -30,7 +30,7 @@ export abstract class Transport {
 
   public abstract connect(): Promise<any>;
   public abstract close(): void;
-  public abstract async sendData(data: JSONRPCRequestData, timeout?: number | null): Promise<any>;
+  public abstract sendData(data: JSONRPCRequestData, timeout?: number | null): Promise<any>;
 
   public subscribe(event: TransportEventName, handler: ITransportEvents[TransportEventName]) {
     this.transportRequestManager.transportEventChannel.addListener(event, handler);

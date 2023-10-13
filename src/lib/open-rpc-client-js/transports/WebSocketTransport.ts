@@ -1,6 +1,6 @@
 import WS from "isomorphic-ws";
 import { Transport } from "./Transport";
-import { JSONRPCRequestData, getNotifications, getBatchRequests } from "../Request";
+import { type JSONRPCRequestData, getNotifications, getBatchRequests } from "../Request";
 import { JSONRPCError, ERR_UNKNOWN } from "../Error";
 
 class WebSocketTransport extends Transport {
@@ -13,7 +13,7 @@ class WebSocketTransport extends Transport {
     this.connection = new WS(uri);
   }
   public connect(): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       const cb = () => {
         this.connection.removeEventListener("open", cb);
         resolve();

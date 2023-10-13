@@ -1,11 +1,11 @@
-import {
+import type {
   JSONRPCRequestData, IJSONRPCRequest,
   IJSONRPCNotification, IJSONRPCNotificationResponse,
   IJSONRPCResponse, IBatchRequest, IJSONRPCData,
 } from "../Request";
 import { EventEmitter } from "events";
 import { JSONRPCError, ERR_TIMEOUT, ERR_UNKNOWN, ERR_MISSIING_ID, convertJSONToRPCError } from "../Error";
-import { promiseResolve, promiseReject, TransportEventChannel, TransportResponse, IRequestPromise } from "./Transport";
+import type { promiseResolve, promiseReject, TransportEventChannel, TransportResponse, IRequestPromise } from "./Transport";
 export interface IPendingRequest {
   resolve: promiseResolve;
   reject: promiseReject;

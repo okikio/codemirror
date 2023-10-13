@@ -11,7 +11,7 @@ import {
     DidOpenTextDocumentNotification,
     HoverRequest,
     InitializeRequest,
-    InitializeResult,
+    type InitializeResult,
     TextDocumentSyncKind,
   } from "vscode-languageserver-protocol";
   import { getLanguageService, TextDocument } from "vscode-json-languageservice";
@@ -35,7 +35,7 @@ import {
   
   const docs: { [uri: string]: TextDocument } = {};
   
-  const worker: Worker = self as any;
+  const worker: typeof Worker = self as any;
   const conn = createProtocolConnection(
     new BrowserMessageReader(worker),
     new BrowserMessageWriter(worker)

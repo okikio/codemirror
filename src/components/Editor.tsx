@@ -1,20 +1,26 @@
 import { onMount } from "solid-js";
-import Codemirror from "./codemirror";
 
-import { languageServer } from './lsps';
+import Codemirror from "@/lib/codemirror/codemirror";
+import { languageServer } from '@/lib/lsp/lsp';
+
+import JSONServerWorker from "@/lib/lsp/json-server?worker";
+const JSONServer = new JSONServerWorker();
 export const ls = languageServer({
-    // json-server
-    serverWorker: new Worker(new URL('./tsserver.ts', import.meta.url), { type: 'module', name: "ts-server" }),
-    rootUri: 'file:///',
-    documentUri: `file:///index.ts`, // tsconfig.json
-    languageId: 'ts' // json // As defined at https://microsoft.github.io/language-server-protocol/specification#textDocumentItem.
+	// json-server
+	serverWorker: JSONServer,
+	rootUri: 'file:///',
+	documentUri: `file:///tsconfig.json`, // tsconfig.json
+	languageId: 'json' // json // As defined at https://microsoft.github.io/language-server-protocol/specification#textDocumentItem.
 });
 
 export default () => {
-    let editorEl: HTMLDivElement;
-    onMount(() => {
-        Codemirror(editorEl, [ls]);
-    });
+	let editorEl: HTMLDivElement;
+	onMount(() => {
+		Codemirror(editorEl, [
+			ls
+		]);
+	});
 
-    return <div id="editor" ref={editorEl}></div>;
+	// @ts-ignore
+	return <div id="editor" ref={editorEl}></div>;
 };

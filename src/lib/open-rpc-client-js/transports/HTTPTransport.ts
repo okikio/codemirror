@@ -1,6 +1,5 @@
-import fetch from "isomorphic-fetch";
 import { Transport } from "./Transport";
-import { JSONRPCRequestData, getNotifications, getBatchRequests } from "../Request";
+import { type JSONRPCRequestData, getNotifications, getBatchRequests } from "../Request";
 import { ERR_UNKNOWN, JSONRPCError } from "../Error";
 
 type CredentialsOption = "omit" | "same-origin" | "include"
@@ -50,7 +49,8 @@ class HTTPTransport extends Transport {
         return Promise.reject(responseErr);
       }
     } catch (e) {
-      const responseErr = new JSONRPCError(e.message, ERR_UNKNOWN, e);
+      const err = e instanceof Error ? e : new Error(e as string);
+      const responseErr = new JSONRPCError(err.message, ERR_UNKNOWN, e);
       this.transportRequestManager.settlePendingRequest(notifications, responseErr);
       this.transportRequestManager.settlePendingRequest(getBatchRequests(data), responseErr);
       return Promise.reject(responseErr);
@@ -77,4 +77,6 @@ class HTTPTransport extends Transport {
 }
 
 export default HTTPTransport;
-export {HTTPTransport, HTTPTransportOptions, CredentialsOption}
+export { HTTPTransport };
+export type { HTTPTransportOptions, CredentialsOption };
+

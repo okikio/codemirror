@@ -1,25 +1,13 @@
 {
-    "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "jsx": "preserve",
-        "jsxImportSource": "solid-js",
-        "types": [
-            "vite/client"
-        ],
-        "moduleResolution": "node",
-        "target": "ES2021",
-        "module": "ES2022",
-        "lib": [
-            "ES2021",
-            "ES2020",
-            "DOM",
-            "WebWorker"
-        ],
-        "sourceMap": false,
-        "esModuleInterop": true,
-        "resolveJsonModule": true
-    },
-    "exclude": [
-        "node_modules"
-    ]
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "baseUrl": ".",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
 }

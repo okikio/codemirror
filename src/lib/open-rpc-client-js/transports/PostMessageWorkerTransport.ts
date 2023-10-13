@@ -1,8 +1,8 @@
 import { Transport } from "./Transport";
-import { JSONRPCRequestData, IJSONRPCData, getNotifications } from "../Request";
+import { type JSONRPCRequestData, type IJSONRPCData, getNotifications } from "../Request";
 
 export class PostMessageWorkerTransport extends Transport {
-  public uri: string;
+  // public uri: string;
   public worker: undefined | null | Worker;
   public postMessageID: string;
 
@@ -12,15 +12,15 @@ export class PostMessageWorkerTransport extends Transport {
     this.worker = worker;
     this.postMessageID = `post-message-transport-${Math.random()}`;
   }
-  public createWorker(uri: string): Promise<Worker | null> {
-    return new Promise((resolve, reject) => {
-      const worker = new Worker(uri, {
-        type: "module",
-        name: this.postMessageID,
-      });
-      resolve(worker);
-    });
-  }
+  // public createWorker(uri: string): Promise<Worker | null> {
+  //   return new Promise((resolve, reject) => {
+  //     const worker = new Worker(uri, {
+  //       type: "module",
+  //       name: this.postMessageID,
+  //     });
+  //     resolve(worker);
+  //   });
+  // }
   private messageHandler = (ev: MessageEvent) => {
     console.log("Message Handler", ev.data)
     this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
@@ -34,7 +34,7 @@ export class PostMessageWorkerTransport extends Transport {
         // }
         // this.worker = await this.createWorker(this.uri);
         // this.worker.postMessage(["--useSingleInferredProject", "--locale=en"]);
-        this.worker.addEventListener("message", this.messageHandler);
+        this.worker?.addEventListener?.("message", this.messageHandler);
         resolve();
       } catch (err) { 
         reject(err);
@@ -55,8 +55,8 @@ export class PostMessageWorkerTransport extends Transport {
   public close(): void {
     // const el = document.getElementById(this.postMessageID);
     // el?.remove();
-    this.worker.removeEventListener("message", this.messageHandler);
-    this.worker.terminate();
+    this.worker?.removeEventListener?.("message", this.messageHandler);
+    this.worker?.terminate();
 
   }
 

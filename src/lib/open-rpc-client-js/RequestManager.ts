@@ -1,9 +1,9 @@
 import { Transport } from "./transports/Transport";
-import { IJSONRPCRequest, IJSONRPCNotification, IBatchRequest } from "./Request";
+import type { IJSONRPCRequest, IJSONRPCNotification, IBatchRequest } from "./Request";
 import { JSONRPCError } from "./Error";
-import StrictEventEmitter from "strict-event-emitter-types";
+import type StrictEventEmitter from "strict-event-emitter-types";
 import { EventEmitter } from "events";
-import { JSONRPCMessage } from "./ClientInterface";
+import type { JSONRPCMessage } from "./ClientInterface";
 
 export type RequestChannel = StrictEventEmitter<EventEmitter, IRequestEvents>;
 
